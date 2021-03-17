@@ -6,26 +6,26 @@ function computerPlay() {
 
 function playRound(playerChoice1, computerChoice) {
     let result;
-    console.log(`Computer choses ${computerChoice}`);
+    //console.log(`Computer choses ${computerChoice}`);
     if (playerChoice1 == computerChoice) {
-        result = "It's a tie!"
+        result = "tie"
     } else if (playerChoice1 == 'rock') {
         if (computerChoice == 'paper') {
-            result = 'You lose! Paper beats Rock.';
+            result = 'cPbR'; // computer - Paper beats Rock
         } else {
-            result = 'You win! Rock beats Scissors.';
+            result = 'uRbS'; // user - Rock beats Scissors
         }
     } else if (playerChoice1 == 'paper') {
         if (computerChoice == 'rock') {
-            result = 'You win! Paper beats Rock';
+            result = 'uPbR';
         } else {
-            result = 'You lose! Scissors beat Paper';
+            result = 'cSbP';
         }
     } else if (playerChoice1 == 'scissors') {
         if (computerChoice == 'rock') {
-            result = 'You lose! Rock beats Scissors';
+            result = 'cRbS';
         } else {
-            result = 'You win! Scissors beat paper';
+            result = 'uSbP';
         } 
     } else {
         result = 'Oops! Something went wrong!'
@@ -33,6 +33,46 @@ function playRound(playerChoice1, computerChoice) {
     return result;
 }
 
-let playerChoice = prompt('Rock, Paper or Scissors?').toLowerCase();
+let playerChoice; 
 
-console.log(playRound(playerChoice, computerPlay()));
+function game() {
+    let userScore = 0;
+    let computerScore = 0;
+
+    while( userScore < 5 && computerScore < 5 ){
+        playerChoice = prompt('Rock, Paper or Scissors?').toLowerCase();
+
+        let result = playRound(playerChoice, computerPlay());
+        if (result == 'tie'){
+            document.getElementById("result").innerHTML = "It's a tie!";
+        } else if (result == 'cPbR') {
+            document.getElementById("result").innerHTML = 'You lose! Paper beats Rock.';
+            computerScore += 1;
+        } else if (result == 'uRbS' ) {
+            document.getElementById("result").innerHTML = 'You win! Rock beats Scissors.';
+            userScore += 1;
+        } else if (result == 'uPbR') {
+            document.getElementById("result").innerHTML = 'You win! Paper beats Rock.';
+            userScore += 1;
+        } else if (result == 'cSbP') {
+            document.getElementById("result").innerHTML = 'You lose! Scissors beat Paper.';
+            computerScore += 1;
+        } else if (result == 'cRbS') {
+            document.getElementById("result").innerHTML = 'You lose! Rock beats Scissors.';
+            computerScore += 1;
+        } else if (result == 'uSbP') {
+            document.getElementById("result").innerHTML = 'You win! Scissors beat Paper.';
+            userScore += 1;
+        }
+        
+    }
+
+    if (userScore == 5) {
+        document.getElementById("result").innerHTML = 'Congrats! You won!';
+    } else {
+        document.getElementById("result").innerHTML = 'Sorry, you lost :(';
+    }
+}
+
+game();
+
